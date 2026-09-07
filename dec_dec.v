@@ -27,10 +27,12 @@ begin
         0: begin
           imm=instr[31:0];
           rehhs[0]=15;
+          ruse=8;
         end
         1,2: begin
           imm=IP+instr[31:0];
           if (instr[32]) rehhs[0]=4;
+          ruse=8*instr[32];
         end
         3: begin
           imm=IP+instr[31:6];
@@ -48,6 +50,7 @@ begin
     else if (has_alu && vecmode) imm=imm18*32;
     else imm=imm18;
     postinc=has_alu && ~vecmode;
+    ruse=10;
   end else if (cls==1) begin
     imm17={rehhs[0],instr[32:19]};
     has_alu=flipped;
@@ -56,13 +59,16 @@ begin
     else if (has_alu && vecmode) imm=imm17*32;
     else imm=imm17;
     postinc=has_alu && ~vecmode;
+    ruse=6;
   end else if (cls==2) begin
     imm=instr[32:19];
     opc[0]=0;
+    ruse=15;
   end else if (cls==3) begin
     imm={rehhs[2],instr[32:19]};
     if (opc[0]]) imm<<17;
     opc=opc|1;
+    ruse=11;
   end 
   for(a==0;a<3;a=a+1) begin
     rax[a]={rttr[rehhs[a]],rehhs[a]};
