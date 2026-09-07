@@ -46,8 +46,15 @@ begin
     if (has_alu && vecinit) imm=imm18*phy;
     else if (has_alu && vecmode) imm=imm18*32;
     else imm=imm18;
-    postinc=had_alu && ~vecmode;
+    postinc=has_alu && ~vecmode;
   end else if (cls==1) begin
+    imm17={rehhs[0],instr[32:19]};
+    has_alu=flipped;
+    flipped=0;
+    if (has_alu && vecinit) imm=imm17*phy;
+    else if (has_alu && vecmode) imm=imm17*32;
+    else imm=imm17;
+    postinc=has_alu && ~vecmode;
   end else if (cls==2) begin
     imm=instr[32:19];
     opc[0]=0;
