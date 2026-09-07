@@ -6,6 +6,7 @@ reg flipped;
 reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
+reg [1:0] cls_lsu;
 begin
   cls=instr[39:38];
   rehhs=instr[11:0];
@@ -14,5 +15,12 @@ begin
     instr[16:13];
   flg={2'b0,instr[18:17]};
   opc=instr[37:33];
+  cls_lsu=instr[36:35];
+  if (cls_lsu==1 && cls==1) begin
+  end else if (cls==0) begin
+  end else if (cls==1) begin
+  end else if (cls==2) begin
+  end else if (cls==3) begin
+  end 
 end
 endtask
