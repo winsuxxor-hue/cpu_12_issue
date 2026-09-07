@@ -7,9 +7,9 @@ reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
 reg [1:0] cls_lsu;
-reg [7:0] ra,rb,ri;
+reg [2:0][7:0] ra;
 reg signed [22:0] imm18;
-integer f;
+integer f,a;
 begin
   cls=instr[39:38];
   rehhs=instr[11:0];
@@ -56,12 +56,14 @@ begin
     if (opc[0]]) imm<<17;
     opc=opc|1;
   end 
-  rax[phy][fu]={rttr[rehhs[1]],rehhs[1]};
-  ra=rttr2[{rttr[rehhs[1]],rehhs[1]}];
-  for(f=0;f<fu;f=f+1) if (rax[phy][fu]==
+  for(a==0;a<3;a=a+1) begin
+    rax[a]={rttr[rehhs[a]],rehhs[a]};
+    ra[a]=rttr2[{rttr[rehhs[1]],rehhs[1]}];
+    for(f=0;f<fu;f=f+1) if (rax[a]==
                           rtx[phy][f] &&
                           wrt[phy][f])
-    ra=alloc[phy][f];
-  eng_ra[phy][fu]=ra;
+      ra[a]=alloc[phy][f];
+    eng_ra[phy][fu][a]=ra[a];
+  end
 end
 endtask
