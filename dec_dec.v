@@ -8,6 +8,7 @@ reg [3:0] flg;
 reg [4:0] opc;
 reg [1:0] cls_lsu;
 reg [2:0][7:0] ra;
+reg [4:0] ruse;
 reg signed [22:0] imm18;
 reg signed [17:0] imm17;
 integer f,a;
@@ -60,7 +61,7 @@ begin
     else if (has_alu && vecmode) imm=imm17*32;
     else imm=imm17;
     postinc=has_alu && ~vecmode;
-    ruse=6;
+    ruse=22;
   end else if (cls==2) begin
     imm=instr[32:19];
     opc[0]=0;
