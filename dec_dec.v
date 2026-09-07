@@ -9,6 +9,7 @@ reg [4:0] opc;
 reg [1:0] cls_lsu;
 reg [2:0][7:0] ra;
 reg signed [22:0] imm18;
+reg signed [17:0] imm17;
 integer f,a;
 begin
   cls=instr[39:38];
