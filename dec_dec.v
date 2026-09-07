@@ -36,7 +36,12 @@ begin
     postinc=had_alu && ~vecmode;
   end else if (cls==1) begin
   end else if (cls==2) begin
+    imm=instr[32:19];
+    opc[0]=0;
   end else if (cls==3) begin
+    imm={rehhs[2],instr[32:19]};
+    if (opc[0]]) imm<<17;
+    opc=opc|1;
   end 
 end
 endtask
