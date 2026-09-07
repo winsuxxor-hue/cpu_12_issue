@@ -19,14 +19,26 @@ begin
   flg={2'b0,instr[18:17]};
   opc=instr[37:33];
   cls_lsu=instr[36:35];
-  rax[phy][fu]={rttr[rehhs[1]],rehhs[1]};
-  ra=rttr2[{rttr[rehhs[1]],rehhs[1]}];
-  for(f=0;f<fu;f=f+1) if (rax[phy][fu]==
-                          rtx[phy][f] &&
-                          wrt[phy][f])
-    ra=alloc[phy][f];
-  eng_ra[phy][fu]=ra;
+  
   if (cls_lsu==1 && cls==1) begin
+    if (instr[34]) begin
+      case(instr[33:32])
+        0: begin
+          imm=instr[31:0];
+          rehhs[0]=15;
+        end
+        1,2: begin
+          imm=IP+instr[31:0];
+          if (instr[32]) rehhs[0]=4;
+        end
+        3: begin
+          imm=IP+instr[31:6];
+          cond=instr[3:0];
+          flg=instr[5:4];
+        end
+      endcase
+    end else begin
+    end
   end else if (cls==0) begin
     imm18={cond,flg,rehhs[1],instr[32:19]};
     has_alu=flipped;
@@ -44,5 +56,12 @@ begin
     if (opc[0]]) imm<<17;
     opc=opc|1;
   end 
+  rax[phy][fu]={rttr[rehhs[1]],rehhs[1]};
+  ra=rttr2[{rttr[rehhs[1]],rehhs[1]}];
+  for(f=0;f<fu;f=f+1) if (rax[phy][fu]==
+                          rtx[phy][f] &&
+                          wrt[phy][f])
+    ra=alloc[phy][f];
+  eng_ra[phy][fu]=ra;
 end
 endtask
