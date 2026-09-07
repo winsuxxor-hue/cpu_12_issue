@@ -7,8 +7,9 @@ reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
 reg [1:0] cls_lsu;
-  reg [7:0] ra,rb,ri;
-  integer f;
+reg [7:0] ra,rb,ri;
+reg signed [21:0] imm18;
+integer f;
 begin
   cls=instr[39:38];
   rehhs=instr[11:0];
@@ -27,6 +28,12 @@ begin
   eng_ra[phy][fu]=ra;
   if (cls_lsu==1 && cls==1) begin
   end else if (cls==0) begin
+    imm18={cond,rehhs[1],instr[32:19]};
+    has_alu=flipped;
+    if (has_alu && vecinit) imm=imm18*phy;
+    else if (has_alu && vecmode) imm=imm18*32;
+    else imm=imm18;
+    postinc=had_alu && ~vecmode;
   end else if (cls==1) begin
   end else if (cls==2) begin
   end else if (cls==3) begin
