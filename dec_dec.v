@@ -30,6 +30,7 @@ begin
   end else if (cls==0) begin
     imm18={cond,flg,rehhs[1],instr[32:19]};
     has_alu=flipped;
+    flipped=0;
     if (has_alu && vecinit) imm=imm18*phy;
     else if (has_alu && vecmode) imm=imm18*32;
     else imm=imm18;
