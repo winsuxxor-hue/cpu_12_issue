@@ -38,6 +38,7 @@ begin
           imm=IP+instr[31:6];
           cond=instr[3:0];
           flg=instr[5:4];
+          ruse=0;
         end
       endcase
     end else begin
