@@ -40,7 +40,7 @@ begin
           imm=IP+instr[31:6];
           cond=instr[3:0];
           flg=instr[5:4];
-          ruse=0;
+          ruse=32;
         end
       endcase
     end else begin
@@ -62,16 +62,16 @@ begin
     else if (has_alu && vecmode) imm=imm17*32;
     else imm=imm17;
     postinc=has_alu && ~vecmode;
-    ruse=22;
+    ruse=54;
   end else if (cls==2) begin
     imm=instr[32:19];
     opc[0]=0;
-    ruse=15;
+    ruse=47;
   end else if (cls==3) begin
     imm={rehhs[2],instr[32:19]};
     if (opc[0]]) imm<<17;
     opc=opc|1;
-    ruse=11;
+    ruse=43;
   end 
   for(a==0;a<3;a=a+1) begin
     rax[a]={rttr[rehhs[a]],rehhs[a]};
