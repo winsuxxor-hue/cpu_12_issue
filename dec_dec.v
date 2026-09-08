@@ -8,7 +8,7 @@ reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
 reg [1:0] cls_lsu;
-reg [2:0][7:0] ra;
+reg [2:0][11:0] ra;
 reg [4:0] ruse;
 reg signed [22:0] imm18;
 reg signed [17:0] imm17;
