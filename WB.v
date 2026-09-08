@@ -1,6 +1,8 @@
 task wb;
   input[11:0] treg;
   input en;
+  input[11:0] tregmul;
+  input enmul;
   input[11:0] treg2;
   input en2;
   input[11:0] treg3;
@@ -17,6 +19,10 @@ task wb;
       for(a=0;a<3;a++)
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
           [c3][c4][0]==treg && en)
+        eng_free[f][c1][c2][a]<=0;
+      for(a=0;a<3;a++)
+      if (eng_free[f][c1][c2][a] && eng_ra[fu]
+          [c3][c4][0]==tregmul && enmul)
         eng_free[f][c1][c2][a]<=0;
       a=4;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
