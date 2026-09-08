@@ -85,6 +85,11 @@ begin
     eng_ra[fu][a]=ra[a];
   end
   if (en)
-  eng_free[alloc[fu][7:4]][alloc[fu][3:0]]<=ruse;
+  eng_free[alloc[fu][7:4]][alloc[fu][3:0]]
+    <=ruse;
+  if (en && ruse[3]) begin
+    rttr2[rehhs[0]]<=flipped;
+    rttr[{flipped,rehhs[0]}]<=alloc[fu];
+  end
 end
 endtask
