@@ -2,13 +2,14 @@ task dec_dec;
 input [39:0] instr;
 input en;
 reg [1:0] cls;
-reg [2:0][3:0] rehhs;
+reg [3:0][3:0] rehhs;
 reg flipped;
 reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
 reg [1:0] cls_lsu;
-reg [2:0][11:0] ra;
+reg [3:0][11:0] ra;
+reg [3:0][4:0] rax;
 reg [4:0] ruse;
 reg signed [22:0] imm18;
 reg signed [17:0] imm17;
@@ -73,9 +74,10 @@ begin
     opc=opc|1;
     ruse=43+64*&opc[4:3];
   end 
-  for(a==0;a<3;a=a+1) begin
+  rehhs[3]=flg;
+  for(a==0;a<4;a=a+1) begin
     rax[a]={rttr[rehhs[a]],rehhs[a]};
-    ra[a]=rttr2[{rttr[rehhs[1]],rehhs[1]}];
+    ra[a]=rttr2[{rttr[rehhs[a]],rehhs[a]}];
     for(f=0;f<fu;f=f+1) if (rax[a]==
                           rtx[phy][f] &&
                           wrt[phy][f])
