@@ -13,6 +13,10 @@ task wb;
       a=4;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
            [c3][c4][0]==treg2 && en2)
-         eng_free[f][c1][c2][a]<=0
+        eng_free[f][c1][c2][a]<=0;
+      a=3;
+      if (eng_free[f][c1][c2][a] && eng_ra[fu]
+           [c3][c4][0]==treg3 && en3)
+        eng_free[f][c1][c2][a]<=0
     end
 endtask
