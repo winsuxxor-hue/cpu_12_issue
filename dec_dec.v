@@ -1,5 +1,6 @@
 task dec_dec;
 input [39:0] instr;
+input en;
 reg [1:0] cls;
 reg [2:0][3:0] rehhs;
 reg flipped;
@@ -78,8 +79,10 @@ begin
     for(f=0;f<fu;f=f+1) if (rax[a]==
                           rtx[phy][f] &&
                           wrt[phy][f])
-      ra[a]=alloc[phy][f];
-    eng_ra[phy][fu][a]=ra[a];
+      ra[a]=alloc[f];
+    eng_ra[fu][a]=ra[a];
   end
+  if (en)
+  eng_free[alloc[fu][7:4]][alloc[fu][3:0]]<=ruse;
 end
 endtask
