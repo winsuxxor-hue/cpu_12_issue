@@ -1,0 +1,7 @@
+0 r-else
+1 r a
+2 r b
+3 writereg
+4 r str aux
+5 r flag
+6 mul/mem l1 latency for writereg
