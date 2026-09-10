@@ -22,7 +22,9 @@ begin
     instr[16:13];
   flg={2'b0,instr[18:17]};
   opc=instr[37:33];
+  memcmov=0;
   cls_lsu=instr[36:35];
+  immff=0;
   
   if (cls_lsu==1 && cls==1) begin
     if (instr[34]) begin
@@ -31,6 +33,7 @@ begin
           imm=instr[31:0];
           rehhs[0]=15;
           ruse=8;
+          opc=15;
         end
         1,2: begin
           imm=IP+instr[31:0];
@@ -45,6 +48,20 @@ begin
         end
       endcase
     end else begin
+      case(instr[33:32])
+        0: begin
+          if (rehhs[2][0]) begin
+            immff=1;
+            imm=instr[32:19]+IP*rehhs[2][1];
+            alret=rehhs[2][3:2];
+          end else begin
+            immff=0;
+            imm=instr[32:19];
+            alret=rehhs[2][3:2];
+            opc=2+rehhs[2][1];
+          end
+        end
+      endcase
     end
   end else if (cls==0) begin
     imm18={cond,flg,rehhs[1],instr[32:19]};
