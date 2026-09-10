@@ -33,6 +33,16 @@ task wb;
       a=5;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
           [c1][c2][3]==treg_reg && en_reg)
-        eng_free[f][c1][c2][a]<=0
+        eng_free[f][c1][c2][a]<=0;
+      if (eng_free[f][c1][c2][a] && eng_ra[fu]
+          [c1][c2][3]==treg_flgse && en_flgse)
+       begin
+         if (flcond(dataflx[fu],dataopx[`op_inv])
+           eng_free[f][c1][c2][0]<=0;
+         else begin
+           eng_free[f][c1][c2][1]<=0;
+           eng_free[f][c1][c2][2]<=0;
+         end
+       end
     end
 endtask
