@@ -25,7 +25,7 @@ begin
   memcmov=0;
   cls_lsu=instr[36:35];
   immff=0;
-  
+  imm=0;
   if (cls_lsu==1 && cls==1) begin
     if (instr[34]) begin
       case(instr[33:32])
