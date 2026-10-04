@@ -5,3 +5,4 @@
 4 r str aux
 5 r flag
 6 mul/mem l1 latency for writereg
+7 wobbly gather
