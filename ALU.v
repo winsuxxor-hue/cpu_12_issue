@@ -65,5 +65,14 @@ task alu;
       3: resm=dataA_uns*dataB_uns>>64;
     endcase
   endcase
+  if ((opcode[4:3]==1 || opcode[4:3]==2 &&
+       opcode[2:1]==3) && true2)
+    res=resl;
+  else if (opcode[4:3]==2)
+    res=resshf;
+  if (~true2) res=dataC;
+  resm2<=resm;
+  resm3<=resm2;
+  resmul={1'b0,resm3[63],resm3[63:0]};
 endtask
   
