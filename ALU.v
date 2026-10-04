@@ -58,6 +58,12 @@ task alu;
       1: resshf=(dataA_shf>>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
       2: resshf=(dataA_shf>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
     endcase
+    3: case(opcode[2:1])
+      0: resm=dataA_sgn[31:0]*dataB_sgn[31:0];
+      1: resm=dataA_uns[31:0]*dataB_uns[31:0];
+      2: resm=dataA_sgn*dataB_sgn;
+      3: resm=dataA_uns*dataB_uns>>64;
+    endcase
   endcase
 endtask
   
