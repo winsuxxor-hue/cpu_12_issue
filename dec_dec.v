@@ -1,9 +1,9 @@
 task dec_dec;
-input [39:0] instr;
+input [42:0] instr;
 input en;
 reg [1:0] cls;
-reg [3:0][3:0] rehhs;
-reg flipped;
+reg [3:0][4:0] rehhs;
+//reg flipped;
 reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
@@ -15,15 +15,15 @@ reg signed [22:0] imm18;
 reg signed [17:0] imm17;
 integer f,a;
 begin
-  cls=instr[39:38];
-  rehhs=instr[11:0];
-  flipped=instr[12];
+  cls=instr[42:41];
+  rehhs=instr[14:0];
+  //flipped=instr[12];
   cond=cls==0 ? 4'hf : 
-    instr[16:13];
-  flg={2'b0,instr[18:17]};
-  opc=instr[37:33];
+    instr[18:15];
+  flg=instr[22:19];
+  opc=instr[40:36];
   memcmov=0;
-  cls_lsu=instr[36:35];
+  cls_lsu=instr[39:38];
   immff=0;
   imm=0;
   if (cls_lsu==1 && cls==1) begin
@@ -52,11 +52,11 @@ begin
         0: begin
           if (rehhs[2][0]) begin
             immff=1;
-            imm=instr[32:19]+IP*rehhs[2][1];
+            imm=instr[35:23]+IP*rehhs[2][1];
             alret=rehhs[2][3:2];
           end else begin
             immff=0;
-            imm=instr[32:19];
+            imm=instr[35:23];
             alret=rehhs[2][3:2];
             opc=2+rehhs[2][1];
           end
@@ -64,37 +64,39 @@ begin
       endcase
     end
   end else if (cls==0) begin
-    imm18={cond,flg,rehhs[1],instr[32:19]};
-    has_alu=flipped;
-    flipped=0;
+    imm18={cond,flg,rehhs[1],instr[35:23]};
+    has_alu=opc[0];
+   // flipped=0;
     if (has_alu && vecinit) imm=imm18*phy;
     else if (has_alu && vecmode) imm=imm18*32;
     else imm=imm18;
     postinc=has_alu && ~vecmode;
     ruse=74;
   end else if (cls==1) begin
-    imm17={rehhs[0],instr[32:19]};
-    has_alu=flipped;
-    flipped=0;
+    imm17={rehhs[0],instr[35:23]};
+    has_alu=opc[4];
+   // flipped=0;
     if (has_alu && vecinit) imm=imm17*phy;
     else if (has_alu && vecmode) imm=imm17*32;
     else imm=imm17;
     postinc=has_alu && ~vecmode;
     ruse=54;
   end else if (cls==2) begin
-    imm=instr[32:19];
+    imm=instr[35:23];
     opc[0]=0;
     ruse=47+64*&opc[4:3];
   end else if (cls==3) begin
-    imm={rehhs[2],instr[32:19]};
-    if (opc[0]]) imm<<17;
+    imm={rehhs[2],instr[35:23]};
+    if (opc[0]]) begin
+      imm=imm[17:1]<<17+{17{imm[0]}};
+    end
     opc=opc|1;
     ruse=43+64*&opc[4:3];
   end 
   rehhs[3]=flg;
   for(a==0;a<4;a=a+1) begin
-    rax[a]={rttr[rehhs[a]],rehhs[a]};
-    ra[a]=rttr2[{rttr[rehhs[a]],rehhs[a]}];
+    rax[a]={rttr[rehhs[a]};
+    ra[a]=rttr2[{rehhs[a]}];
     for(f=0;f<fu;f=f+1) if (rax[a]==
                           rtx[phy][f] &&
                           wrt[phy][f])
@@ -105,8 +107,7 @@ begin
   eng_free[alloc[fu][7:4]][alloc[fu][3:0]]
     <=ruse;
   if (en && ruse[3]) begin
-    rttr2[rehhs[0]]<=flipped;
-    rttr[{flipped,rehhs[0]}]<=alloc[fu];
+    rttr[{rehhs[0]}]<=alloc[fu];
   end
 end
 endtask
