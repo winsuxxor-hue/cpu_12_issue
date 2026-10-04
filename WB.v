@@ -16,12 +16,20 @@ task wb;
     begin
       for(a=0;a<3;a++)
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
-          [c1][c2][a]==treg && en)
-        eng_free[f][c1][c2][a]<=0;
+          [c1][c2][a]==treg && en && 
+          ~eng_free[f][c1][c2][7]|(a!=2)|
+          foo[f][c1][c2][phy]) begin
+          eng_free[f][c1][c2][a]<=0;
+          foo[f][c1][c2][phy+1]<=1;
+        end
       for(a=0;a<3;a++)
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
-          [c1][c2][a]==tregmul && enmul)
-        eng_free[f][c1][c2][a]<=0;
+          [c1][c2][a]==tregmul && enmul && 
+          ~eng_free[f][c1][c2][7]|(a!=2)|
+          foo[f][c1][c2][phy]) begin
+          eng_free[f][c1][c2][a]<=0;
+          foo[f][c1][c2][phy+1]<=1;
+        end
       a=4;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
           [c1][c2][2]==treg2 && en2)
