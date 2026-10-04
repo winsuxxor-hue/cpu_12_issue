@@ -9,6 +9,7 @@ task alu;
   input [65:0] dataB_shf;
   input true;
   input [4:0] opcode;
+  input postinc;
   reg true2;
   true2=true;
   case(opcode[4:3])
@@ -74,5 +75,6 @@ task alu;
   resm2<=resm;
   resm3<=resm2;
   resmul={1'b0,resm3[63],resm3[63:0]};
+  resaddr=postinc ? dataA_sub[42:0] : res[42:0];
 endtask
   
