@@ -48,8 +48,16 @@ task alu;
                              
         1: resl=~opcode[0] ? dataA_ipx[dataB_logcmov[4:0]] :
           dataA_ipx[loopstop-dataB_logcmov[0]];
+        2: resl=dataA_logcmov|dataB_logcmov;
+        3: resl=dataA_logcmov&dataB_logcmov;
       endcase
     end
+    1: case(opcode[2:1])
+      3: resl=dataA_logcmov^dataB_logcmov;
+      0: resshf=(dataA_shf<<dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
+      1: resshf=(dataA_shf>>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
+      2: resshf=(dataA_shf>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
+    endcase
   endcase
 endtask
   
