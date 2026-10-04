@@ -36,6 +36,20 @@ task alu;
         end
       endcase
     end
+    2: begin
+      case(opcode[2:1])
+        0: resl=~opcode[0] ? (passimm[0] 
+                    
+                              ? dataB_logcmov : passimm[1] ?
+                              {dataB_logcmov[65:32],
+                               dataA_logcmov[31:0]} :
+                              |dataB_logcmov[63:32] &
+                              |dataA_logcmov[31:0]);
+                             
+        1: resl=~opcode[0] ? dataA_ipx[dataB_logcmov[4:0]] :
+          dataA_ipx[loopstop-dataB_logcmov[0]];
+      endcase
+    end
   endcase
 endtask
   
