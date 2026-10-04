@@ -7,6 +7,7 @@ task alu;
   input [65:0] dataB_sub;
   input [65:0] dataB_logcmov;
   input [65:0] dataB_shf;
+  input true;
   input [4:0] opcode;
   case(opcode[4:3])
     0: begin
@@ -14,9 +15,17 @@ task alu;
         0: res={dataA_add[63],dataA_add
                 [63:0]}+{dataB_add[63],
                          dataB_add[63:0]};
+        1: res={dataA_add[63],dataA_add
+                [63:0]}+{dataB_add[63],
+                         dataB_add[63:0]}
+                         +true;
         2: res={dataA_sub[63],dataA_sub
                 [63:0]}-{dataB_sub[63],
                          dataB_sub[63:0]};
+        3: res={dataA_sub[63],dataA_sub
+                [63:0]}-{dataB_sub[63],
+                         dataB_sub[63:0]}
+                         -!true;
       endcase
     end
   endcase
