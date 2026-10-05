@@ -1,0 +1,3 @@
+with dram style depleting dynamic logic, gate size approx as xor3/bitmux13 , clock can be 162-164 ghz.
+divide by 2 for sequentially scan through streams if on chip ram
+divide by 15 for sequentially scan if external memory
