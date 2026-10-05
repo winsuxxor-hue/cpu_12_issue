@@ -3,10 +3,12 @@ task alu;
   input [65:0] dataA_sub;
   input [65:0] dataA_logcmov;
   input [65:0] dataA_shf;
+  input real dataA_real;
   input [65:0] dataB_add;
   input [65:0] dataB_sub;
   input [65:0] dataB_logcmov;
   input [65:0] dataB_shf;
+  input real dataB_real;
   input true;
   input [4:0] opcode;
   input postinc;
@@ -81,7 +83,7 @@ task alu;
   if (~true2) res=dataC;
   resm2<=resm;
   resm3<=resm2;
-  resmul={1'b0,resm3[63],resm3[63:0]};
+  if (fu>9) resmul={1'b0,resm3[63],resm3[63:0]};
   resaddr=postinc ? dataA_sub[42:0] : res[42:0];
 endtask
   
