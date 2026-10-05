@@ -63,7 +63,14 @@ task alu;
       0: resm=dataA_sgn[31:0]*dataB_sgn[31:0];
       1: resm=dataA_uns[31:0]*dataB_uns[31:0];
       2: resm=dataA_sgn*dataB_sgn;
-      3: resm=dataA_uns*dataB_uns>>64;
+      3: begin
+        if (passimm[0])
+          resm=dataA_uns*dataB_uns>>64;
+        else 
+          resm=pasimm[1] ?
+          dataA_real * dataB_real :
+          dataA_real + dataB_real;
+      end
     endcase
   endcase
   if ((opcode[4:3]==1 || opcode[4:3]==2 &&
