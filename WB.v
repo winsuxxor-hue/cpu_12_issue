@@ -16,18 +16,16 @@ task wb;
     begin
       for(a=0;a<3;a++)
         if (eng_free[f][c1][c2][a] && (eng_ra[fu]
-          [c1][c2][a]==treg && en && 
-                                       ~eng_free[f][c1][c2][7]|(a!=2))|
-          foo[f][c1][c2][phy]) begin
+                                       [c1][c2][a]==treg && en)
+            ||foo[f][c1][c2][phy]&eng_free[f][c1][c2][7]) begin
           eng_free[f][c1][c2][a]<=0;
           if (!&phy) foo[f][c1][c2][phy+1]<=1;
           foo[f][c1][c2][phy]<=0;
         end
       for(a=0;a<3;a++)
         if (eng_free[f][c1][c2][a] && (eng_ra[fu]
-          [c1][c2][a]==tregmul && enmul && 
-                                       ~eng_free[f][c1][c2][7]|(a!=2))|
-          foo[f][c1][c2][phy]) begin
+                                       [c1][c2][a]==tregmul && enmul)
+            ||foo[f][c1][c2][phy]&eng_free[f][c1][c2][7]) begin
           eng_free[f][c1][c2][a]<=0;
           if (!&phy) foo[f][c1][c2][phy+1]<=1;
           foo[f][c1][c2][phy]<=0;
