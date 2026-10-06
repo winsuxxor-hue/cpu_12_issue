@@ -15,33 +15,35 @@ task wb;
     for(f=0;f<12;f=f+1)
     begin
       for(a=0;a<3;a++)
-      if (eng_free[f][c1][c2][a] && eng_ra[fu]
+        if (eng_free[f][c1][c2][a] && (eng_ra[fu]
           [c1][c2][a]==treg && en && 
-          ~eng_free[f][c1][c2][7]|(a!=2)|
+                                       ~eng_free[f][c1][c2][7]|(a!=2))|
           foo[f][c1][c2][phy]) begin
           eng_free[f][c1][c2][a]<=0;
-          foo[f][c1][c2][phy+1]<=1;
+          if (!&phy) foo[f][c1][c2][phy+1]<=1;
+          foo[f][c1][c2][phy]<=0;
         end
       for(a=0;a<3;a++)
-      if (eng_free[f][c1][c2][a] && eng_ra[fu]
+        if (eng_free[f][c1][c2][a] && (eng_ra[fu]
           [c1][c2][a]==tregmul && enmul && 
-          ~eng_free[f][c1][c2][7]|(a!=2)|
+                                       ~eng_free[f][c1][c2][7]|(a!=2))|
           foo[f][c1][c2][phy]) begin
           eng_free[f][c1][c2][a]<=0;
-          foo[f][c1][c2][phy+1]<=1;
+          if (!&phy) foo[f][c1][c2][phy+1]<=1;
+          foo[f][c1][c2][phy]<=0;
         end
       a=4;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
-          [c1][c2][2]==treg2 && en2)
+          [c1][c2][2]==treg && en)
+        eng_free[f][c1][c2][a]<=0;
+      if (eng_free[f][c1][c2][a] && eng_ra[fu]
+          [c1][c2][2]==tregmul && enmul)
         eng_free[f][c1][c2][a]<=0;
       a=3;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
           [c2][c3][0]==treg3 && en3)
         eng_free[f][c1][c2][a]<=0;
       a=5;
-      if (eng_free[f][c1][c2][a] && eng_ra[fu]
-          [c1][c2][3]==treg_reg && en_reg)
-        eng_free[f][c1][c2][a]<=0;
       if (eng_free[f][c1][c2][a] && eng_ra[fu]
           [c1][c2][3]==treg_flgse && en_flgse)
        begin
