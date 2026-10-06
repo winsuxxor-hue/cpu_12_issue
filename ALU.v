@@ -70,7 +70,8 @@ task alu;
         if (passimm[0])
           resm=dataA_uns*dataB_uns>>64;
         else 
-          resm=pasimm[1] ?
+          resm=passimm[2] ? dataA_logcmov/passimm[6:3]
+          : pasimm[1] ?
           dataA_real * dataB_real :
           dataA_real + dataB_real;
       end
