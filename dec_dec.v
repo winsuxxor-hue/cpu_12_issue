@@ -74,6 +74,13 @@ begin
     postinc=has_alu && ~vecmode;
     opmem={1'b0,opc};
     ruse=74;
+    opc=1;
+    if (cls_lsu==2 && !instr[40] && instr
+        [37]) begin
+        opc=8;
+        ruse=78;
+        opmem[3:2]=1;
+    end
   end else if (cls==1) begin
     imm17={rehhs[0],instr[35:23]};
     has_alu=opc[4];
