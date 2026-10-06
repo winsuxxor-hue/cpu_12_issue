@@ -57,7 +57,8 @@ task alu;
     end
     1: case(opcode[2:1])
       3: resl=dataA_logcmov^dataB_logcmov;
-      0: resshf=(dataA_shf<<dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
+      0: resshf=((dataA_shf&{{12{~passimm[7]}},52'hfffffffffffff})<<(passimm[7] ? 
+                             dataB_shf[56:53]:dataB_shf[5:0]))&{{32{passimm[6]}},32'hffffffff};
       1: resshf=(dataA_shf>>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
       2: resshf=(dataA_shf>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
     endcase
