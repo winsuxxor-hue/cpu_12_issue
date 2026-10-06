@@ -7,7 +7,7 @@ reg [3:0][4:0] rehhs;
 reg [3:0] cond;
 reg [3:0] flg;
 reg [4:0] opc;
-reg [5:0] opmem;
+reg [8:0] opmem;
 reg [1:0] cls_lsu;
 reg [3:0][11:0] ra;
 reg [3:0][4:0] rax;
@@ -16,6 +16,7 @@ reg signed [22:0] imm18;
 reg signed [17:0] imm17;
 integer f,a;
 begin
+  opmem=128;
   cls=instr[42:41];
   rehhs=instr[14:0];
   //flipped=instr[12];
@@ -72,7 +73,7 @@ begin
     else if (has_alu && vecmode) imm=imm18*32;
     else imm=imm18;
     postinc=has_alu && ~vecmode;
-    opmem={1'b0,opc};
+    opmem={1'b0,has_alu,postinc,1'b1,opc};
     ruse=74;
     opc=1;
     if (cls_lsu==2 && !instr[40] && instr
@@ -90,7 +91,7 @@ begin
     else imm=imm17;
     postinc=has_alu && ~vecmode;
     ruse=54;
-    opmem={1'b1,opc};
+    opmem={1'b1,has_alu,postinc,1'b1, opc};
   end else if (cls==2) begin
     imm=instr[35:23];
     opc[0]=0;
