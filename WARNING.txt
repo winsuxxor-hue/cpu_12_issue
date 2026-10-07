@@ -1,2 +1,2 @@
 good faith adherence to third party patents is not guaranteed by this code. if you have a contract with a major patent holder this might prevent you from contributing. in such case, mark with comments all of yor code stating whom it belongs to.
-none of this code and documents have been written on a ddr4 or ddr3 or ddr2 or ddr or sdr1-7 system
+none of this code and documents have been written on a ddr4 or ddr3 or ddr2 or ddr or sdr1-7 or dram system
