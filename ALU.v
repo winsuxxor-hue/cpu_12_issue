@@ -27,12 +27,12 @@ task alu;
                          +true;
           true2=0;
         end
-        2: res={dataA_sub[63],dataA_sub
-                [63:0]}-{dataB_sub[63],
+        2: res=-{dataA_sub[63],dataA_sub
+                 [63:0]}+{dataB_sub[63],
                          dataB_sub[63:0]};
         3:begin
-          res={dataA_sub[63],dataA_sub
-                [63:0]}-{dataB_sub[63],
+          res=-{dataA_sub[63],dataA_sub
+                [63:0]}+{dataB_sub[63],
                          dataB_sub[63:0]}
                          -!true;
           true2=0;
@@ -73,7 +73,9 @@ task alu;
           resm=passimm[2] ? dataA_sgn/real'(1<<passimm[6:3])
           : pasimm[1] ?
           dataA_real * dataB_real :
-          dataA_real + dataB_real;
+          passimm[3] ?
+          dataA_real + dataB_real :
+          dataA_real - dataB_real;
       end
     endcase
   endcase
