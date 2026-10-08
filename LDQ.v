@@ -1,5 +1,5 @@
 task LDQ;
-  integer ind,phi;
+  integer ind,phi,b;
   for(ind=0;ind<20;ind++)
     for(phi=0;phi<32;phi=phi+1) begin
     bump=eng_bump[ldi];
@@ -26,5 +26,26 @@ task LDQ;
       delayed && useh ? !lsass[phi][s][ldi-
         ind-bump].drdy : !lsass[phi][s]
       [ldi-ind].drdy;
+      datal=useh ? lsass[phi][s][ldi-ind-
+        bump].data : lsass[phi][s][ldi-ind].data;
+      if (useh ?lsass[phi][s][ldi-ind-bump].l:
+        lsass[phi][s][ldi-ind].l)
+        data<<=useh ?lsass[phi][s][ldi-ind-bump].
+        addr[2:0]*3:
+        lsass[phi][s][ldi-ind].
+        addr[2:0]*3;
+      else
+        data>>=64-useh ? lsass[phi][s][ldi-ind-bump].
+        addr[2:0]*3:
+        lsass[phi][s][ldi-ind].
+        addr[2:0]*3;
+      for(b=0;b<9;b++)
+        if (confl && useh ? lsass[phi][s]
+            [ldi-ind-bump].bytes[b] : lsass
+            [phi][s][ldi-ind-bump].bytes[b])
+          begin
+            rddata[8*b+:8]=data[8*b+:8];
+            rdbytes[b]=1;
+          end
   end
 endtask
