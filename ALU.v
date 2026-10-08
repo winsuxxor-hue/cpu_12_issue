@@ -13,7 +13,10 @@ task alu;
   input [4:0] opcode;
   input postinc;
   reg true2;
+  shortreal [1:0] da,db;
   true2=true;
+  {da[phy[0]]}=dataA_uns[31:0];
+  {db[phy[0]]}=dataB_uns[31:0];
   case(opcode[4:3])
     0: begin
       case(opcode[2:1])
@@ -71,11 +74,17 @@ task alu;
           resm=dataA_uns*dataB_uns>>64;
         else 
           resm=passimm[2] ? dataA_sgn/real'(1<<passimm[6:3])
-          : pasimm[1] ?
+          : passimm[4] ? 
+        {pasimm[1] ?
           dataA_real * dataB_real :
           passimm[3] ?
           dataA_real + dataB_real :
-          dataA_real - dataB_real;
+         dataA_real - dataB_real} :
+        {32'b0,pasimm[1] ?
+          da * db :
+          passimm[3] ?
+          da + db :
+         da - db};
       end
     endcase
   endcase
