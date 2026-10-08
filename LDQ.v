@@ -1,5 +1,7 @@
 task LDQ;
   integer ind,phi,b;
+  rddata=lsasdr[phy][fu][ldi].data;
+  rdbytes=lsasdr[phy][fu][ldi].bytes;
   for(ind=0;ind<20;ind++)
     for(phi=0;phi<32;phi=phi+1) begin
     bump=eng_bump[ldi];
