@@ -81,10 +81,10 @@ task alu;
           dataA_real + dataB_real :
          dataA_real - dataB_real} :
         {32'b0,pasimm[1] ?
-          da * db :
+         da[phy[0]] * db[phy[0]] :
           passimm[3] ?
-          da + db :
-         da - db};
+          da[phy[0]] + db[phy[0]] :
+         da[phy[0]] - db[phy[0]]};
       end
     endcase
   endcase
