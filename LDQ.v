@@ -6,16 +6,23 @@ task LDQ;
     bumpid=eng_bumpid[ldi];
     bumpid2=eng_bumpid[ldi-bump];
     useh=bumpid==bumpid2 && bumpid[0] && phy<phi;
-    preenl=ind || fu>lsass[phi][0][ldi].fu;
+    preenl=ind || fu>lsass[phi][s][ldi].fu;
     acmpl=lsasdr[phy][fu][ldi].addr[42:3]==
-    lsass[phi][0][ldi-ind].addr[42:3] && 
+      lsass[phi][s][ldi-ind].addr[42:3] && 
     lsasdr[phy][fu][ldi].bytes & 
-      lsass[phi][0][ldi-ind].
+      lsass[phi][s][ldi-ind].
     bytes && foo_en;
     acmph=lsasdr[phy][fu][ldi].addr[42:3]==
-    lsass[phi][0][ldi-ind-bump].addr[42:3] && 
+      lsass[phi][s][ldi-ind-bump].addr[42:3] && 
     lsasdr[phy][fu][ldi].bytes & 
-      lsass[phi][0][ldi-ind-bump].
+      lsass[phi][s][ldi-ind-bump].
     bytes && foo_en;
+    confl=useh? acmph && preenl : acmpl && 
+      preenl;
+    if (!lsasdr[phy][fu][ldi].ldq) confl=0;
+    confl_ex=confl && !lsasdr[phy][fu][ldi].
+      delayed;
+    confl_wait=confl && lsasdr[phy][fu][ldi].
+      delayed;
   end
 endtask
