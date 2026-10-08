@@ -20,9 +20,11 @@ task LDQ;
     confl=useh? acmph && preenl : acmpl && 
       preenl;
     if (!lsasdr[phy][fu][ldi].ldq) confl=0;
-    confl_ex=confl && !lsasdr[phy][fu][ldi].
+    confl_ex|=confl && !lsasdr[phy][fu][ldi].
       delayed;
-    confl_wait=confl && lsasdr[phy][fu][ldi].
-      delayed;
+    confl_wait|=confl && lsasdr[phy][fu][ldi].
+      delayed && useh ? !lsass[phi][s][ldi-
+        ind-bump].drdy : !lsass[phi][s]
+      [ldi-ind].drdy;
   end
 endtask
