@@ -28,6 +28,9 @@ static task cache;
         [mreg_reg2[7:4]][mreg_reg2[3:0]]<=
         rdataS_reg[phy][fu]
         [65:0];
+      expt=rdtag_reg[phy][fu].ex & !
+      rdtag_reg[phy][fu].elid ||
+      rdataA_reg[phy][fu]^1;
     end
   end
 endtask
