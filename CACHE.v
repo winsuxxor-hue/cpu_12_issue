@@ -1,6 +1,8 @@
 static task cache;
   input [42:0] eng_addr;
   input [2:0] dreq;
+  input [5:0] eng_lsi;
+  input [11:0] mreg_reg2;
   reg [3:0][11:0][7:0][7:0][7:0][1:0][67:0] data;
   l1tag [3:0][11:0][7:0][7:0][1:0] tag;
   reg [67:0] rddata;
@@ -31,6 +33,8 @@ static task cache;
       expt=rdtag_reg[phy][fu].ex & !
       rdtag_reg[phy][fu].elid ||
       rdataA_reg[phy][fu]^1;
+      eng_xc[phy][fu][eng_lsi]<={1'b1,
+                                 expt};
     end
   end
 endtask
