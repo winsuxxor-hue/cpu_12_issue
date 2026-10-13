@@ -50,4 +50,6 @@ task LDQ;
             rdbytes[b]=1;
           end
   end
+  if (confl_ex) eng_xc[phy][fu][ldi]
+    <=1;
 endtask
