@@ -19,15 +19,20 @@ task LDQ;
     lsasdr[phy][fu][ldi].bytes & 
       lsass[phi][s][ldi-ind-bump].
     bytes && foo_en;
+    acmpm=lsasdr[phy][fu][ldi].addr[42:3]==
+      lsass[phi][s][ldi+ind].addr[42:3] && 
+    lsasdr[phy][fu][ldi].bytes & 
+      lsass[phi][s][ldi+ind].
+    bytes && foo_en;
     confl=useh? acmph && preenl : acmpl && 
       preenl;
+    conflm=acmpm && preenl;
     if (!lsasdr[phy][fu][ldi].ldq) confl=0;
     confl_ex|=confl && !lsasdr[phy][fu][ldi].
       delayed;
-    confl_wait|=confl && lsasdr[phy][fu][ldi].
-      delayed && useh ? !lsass[phi][s][ldi-
-        ind-bump].drdy : !lsass[phi][s]
-      [ldi-ind].drdy;
+    confl_wait|=conflm && lsasdr[phy][fu][ldi].
+      delayed && !lsass[phi][s][ldi+
+        ind].drdy;
       datal=useh ? lsass[phi][s][ldi-ind-
         bump].data : lsass[phi][s][ldi-ind].data;
       if (useh ?lsass[phi][s][ldi-ind-bump].l:
