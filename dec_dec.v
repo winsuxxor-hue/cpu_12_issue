@@ -1,3 +1,7 @@
+//load count restricted to 6; if more, pause the instruction queue and insert less
+//also up to 2 indirect branches or one indirect and two conditional/unconditional or four conditional/unconditional
+//or pause instruction queue in which case misprediction would have a very heavy penalty on the subsequent extra branches
+
 task dec_dec;
 input [42:0] instr;
 input en;
