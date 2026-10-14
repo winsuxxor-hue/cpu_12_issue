@@ -7,6 +7,7 @@ static task cache;
   l1tag [3:0][11:0][7:0][7:0][1:0] tag;
   reg [67:0] rddata;
   integer bank;
+  integer phi;
   for(bank=0;bank<12;bank++) begin
     rddata=data[phy[4:3]][bank]
       [eng_addr[5:3]][eng_addr[8:6]]
@@ -43,6 +44,12 @@ static task cache;
       rdataA_reg[phy][fu]^1;
       eng_xc[phy][fu][eng_lsi]<={1'b1,
                                  expt};
+    end
+    for(phi=0;phi<32;phi++) begin
+    if (rdtag_reg[phy][fu].v && 
+        rdtag_reg[phy][fu].rd &&
+        rdtag_reg[phy][fu].addr==
+        eng_addr_reg[phi][fu][ldi+19][42:6]) begin
     end
   end
 endtask
