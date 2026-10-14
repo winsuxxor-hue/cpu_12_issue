@@ -112,9 +112,10 @@ begin
   for(a==0;a<4;a=a+1) begin
     rax[a]={rttr[rehhs[a]};
     ra[a]=rttr2[{rehhs[a]}];
-    for(f=0;f<fu;f=f+1) if (rax[a]==
+    for(f=0;f<12;f=f+1) if (rax[a]==
                           rtx[phy][f] &&
-                          wrt[phy][f])
+                            wrt[phy][f] &&
+                            f<huel[fu])
       ra[a]=alloc[f];
     eng_ra[fu][a]=ra[a];
   end
