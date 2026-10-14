@@ -45,11 +45,28 @@ static task cache;
       eng_xc[phy][fu][eng_lsi]<={1'b1,
                                  expt};
     end
-    for(phi=0;phi<32;phi++) begin
+    for(phi=0;phi<32;phi++) for (s=0;s<2;s++) begin
     if (rdtag_reg[phy][fu].v && 
-        rdtag_reg[phy][fu].rd &&
+        rdtag_reg[phy][fu].wr &&
         rdtag_reg[phy][fu].addr==
-        eng_addr_reg[phi][fu][ldi+19][42:6]) begin
+        lsass[phi][fu][ldi+19][s].addr[42:6]) begin
+      wdata[phi][fu][s]<=lsass[phi][ldi+19][s].data<<(lsass[phi][ldi+19][s].addr[2:0]*8);
+      bytes[phi][fu][s]<=lsass[phi][ldi+19][s].bytes;
+      whit[phi][fu][s]<=lsass[phi][ldi+19][s].en;
     end
+      if (whit[phi][fu][s]) begin
+        for(b=0;b<8;b++) if (bytes[phi][fu][s][b])
+          data[phi[4:3][bank][lsass[phi][ldi+20][s].addr[5:3]]
+               [lsass[phi][ldi+20][s].addr[8:6]]
+               [lsass[phi][ldi+20][s].addr[11:9]]
+               [lsass[phi][ldi+20][s].addr[12]]
+               [8*b+:8]=wdata[phi][fu][s][8*b+:8];
+          if (bytes[phi][fu][s][8])
+          data[phi[4:3][bank][lsass[phi][ldi+20][s].addr[5:3]]
+               [lsass[phi][ldi+20][s].addr[8:6]]
+               [lsass[phi][ldi+20][s].addr[11:9]]
+               [lsass[phi][ldi+20][s].addr[12]]
+               [65:64]=wdata[phi][fu][s][65:64];
+      end
   end
 endtask
