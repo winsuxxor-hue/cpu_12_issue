@@ -3,13 +3,13 @@ static task cache;
   input [2:0] dreq;
   input [5:0] eng_lsi;
   input [11:0] mreg_reg2;
-  reg [3:0][11:0][7:0][7:0][7:0][1:0][67:0] data;
-  l1tag [3:0][11:0][7:0][7:0][1:0] tag;
+  reg [15:0][11:0][7:0][7:0][7:0][1:0][67:0] data;
+  l1tag [15:0][11:0][7:0][7:0][1:0] tag;
   reg [67:0] rddata;
   integer bank;
   integer phi;
   for(bank=0;bank<12;bank++) begin
-    rddata=data[phy[4:3]][bank]
+    rddata=data[phy[6:3]][bank]
       [eng_addr[5:3]][eng_addr[8:6]]
       [eng_addr[11:9]][eng_addr[12]];
     rdatas=rddata>>eng_addr[2:0];
@@ -25,7 +25,7 @@ static task cache;
       2: rdatas[65:32]={rdatas[31],~rdatas[31],
                         {32{sxt}}};
     endcase
-    rdtag=tag[phy[4:3]][bank]
+    rdtag=tag[phy[6:3]][bank]
       [eng_addr[8:6]]
     [eng_addr[11:9]][eng_addr[12]];
     if (rdtag_reg[phy][fu].v && 
@@ -45,28 +45,37 @@ static task cache;
       eng_xc[phy][fu][eng_lsi]<={1'b1,
                                  expt};
     end
-    for(phi=0;phi<32;phi++) for (s=0;s<2;s++) begin
+    for(phi=0;phi<128;phi++) for (s=0;s<2;s++) begin
     if (rdtag_reg[phy][fu].v && 
         rdtag_reg[phy][fu].wr &&
         rdtag_reg[phy][fu].addr==
-        lsass[phi][fu][ldi+19][s].addr[42:6]) begin
+        lsass[phi][fu][ldi+16][s].addr[42:6]) begin
       wdata[phi][fu][s]<=lsass[phi][ldi+19][s].data<<(lsass[phi][ldi+19][s].addr[2:0]*8);
       bytes[phi][fu][s]<=lsass[phi][ldi+19][s].bytes;
       whit[phi][fu][s]<=lsass[phi][ldi+19][s].en;
     end
-      if (whit[phi][fu][s]) begin
-        for(b=0;b<8;b++) if (bytes[phi][fu][s][b])
-          data[phi[4:3][bank][lsass[phi][ldi+20][s].addr[5:3]]
+      bytes2[phi][fu][s]<=bytes[phi][fu][s];
+      bytes3[phi][fu][s]<=bytes2[phi][fu][s];
+      bytes4[phi][fu][s]<=bytes3[phi][fu][s];
+      whit2[phi][fu][s]<=whit[phi][fu][s];
+      whit3[phi][fu][s]<=whit[phi][fu][s];
+      whit4[phi][fu][s]<=whit[phi][fu][s];
+      wdata2[phi][fu][s]<=wdata[phi][fu][s];
+      wdata3[phi][fu][s]<=wdata2[phi][fu][s];
+      wdata4[phi][fu][s]<=wdata3[phi][fu][s];
+      if (whit4[phi][fu][s]) begin
+        for(b=0;b<8;b++) if (bytes4[phi][fu][s][b])
+          data[phi[6:3][bank][lsass[phi][ldi+20][s].addr[5:3]]
                [lsass[phi][ldi+20][s].addr[8:6]]
                [lsass[phi][ldi+20][s].addr[11:9]]
                [lsass[phi][ldi+20][s].addr[12]]
-               [8*b+:8]=wdata[phi][fu][s][8*b+:8];
+               [8*b+:8]=wdata4[phi][fu][s][8*b+:8];
           if (bytes[phi][fu][s][8])
-          data[phi[4:3][bank][lsass[phi][ldi+20][s].addr[5:3]]
+            data[phi[6:3][bank][lsass[phi][ldi+20][s].addr[5:3]]
                [lsass[phi][ldi+20][s].addr[8:6]]
                [lsass[phi][ldi+20][s].addr[11:9]]
                [lsass[phi][ldi+20][s].addr[12]]
-               [65:64]=wdata[phi][fu][s][65:64];
+                 [65:64]=wdata4[phi][fu][s][65:64];
       end
   end
 endtask
