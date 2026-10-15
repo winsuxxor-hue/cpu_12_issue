@@ -52,8 +52,8 @@ task alu;
                               |dataB_logcmov[63:32] &
                               |dataA_logcmov[31:0]);
                              
-        1: resl=~opcode[0] ? dataA_ipx[dataB_logcmov[4:0]] :
-          dataA_ipx[loopstop-dataB_logcmov[0]];
+        1: resl=~opcode[0] ? dataA_ipx[loopstop[6:2]] :
+          dataA_ipx[phy[6:2]-dataB_logcmov[4:0]];
         2: resl=dataA_logcmov|dataB_logcmov;
         3: resl=dataA_logcmov&dataB_logcmov;
       endcase
@@ -74,7 +74,7 @@ task alu;
           resm=dataA_uns*dataB_uns>>64;
         else 
           resm=passimm[2] ? dataA_sgn/real'(1<<passimm[6:3])
-          : passimm[4] ? 
+          : passimm[4] ? passimm[5] ? dataA_ipx[phy[6:0]-passimm[12:6]] :
         {pasimm[1] ?
           dataA_real * dataB_real :
           passimm[3] ?
