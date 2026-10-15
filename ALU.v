@@ -52,8 +52,8 @@ task alu;
                               |dataB_logcmov[63:32] &
                               |dataA_logcmov[31:0]);
                              
-        1: resl=~opcode[0] ? dataA_ipx[loopstop[6:2]] :
-          dataA_ipx[phy[6:2]-dataB_logcmov[4:0]];
+        1: resl=~opcode[0] ? dataA_ipx[loopstop[6:2]*4] :
+          dataA_ipx[phy[6:0]-dataB_logcmov[4:0]*4];
         2: resl=dataA_logcmov|dataB_logcmov;
         3: resl=dataA_logcmov&dataB_logcmov;
       endcase
@@ -61,9 +61,10 @@ task alu;
     1: case(opcode[2:1])
       3: resl=dataA_logcmov^dataB_logcmov;
       0: resshf=((dataA_shf&{{12{~passimm[7]}},52'hfffffffffffff}|{12'b1,52'b0})<<(passimm[7] ? 
-                             dataB_shf[56:53]:dataB_shf[5:0]))&{{32{passimm[6]}},32'hffffffff};
-      1: resshf=(dataA_shf>>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
-      2: resshf=(dataA_shf>>dataB_shf[5:0])&{{32{passimm[6]}},32'hffffffff};
+                                                                                   dataB_shf[56:53]:dataB_shf[5:0]))|
+      {{66{passimm[6]}}&dataB_shf};
+      1: resshf=(dataA_shf>>>dataB_shf[5:0])|{{66{passimm[6]}}&dataB_shf};
+      2: resshf=(dataA_shf>>dataB_shf[5:0])|{{66{passimm[6]}}&dataB_shf};
     endcase
     3: case(opcode[2:1])
       0: resm=dataA_sgn[31:0]*dataB_sgn[31:0];
