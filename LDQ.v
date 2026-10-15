@@ -3,7 +3,7 @@ task LDQ;
   rddata=lsasdr[phy][fu][ldi].data;
   rdbytes=lsasdr[phy][fu][ldi].bytes;
   for(ind=0;ind<20;ind++)
-    for(phi=0;phi<32;phi=phi+1) begin
+    for(phi=0;phi<128;phi=phi+1) begin
     bump=eng_bump[ldi];
     bumpid=eng_bumpid[ldi];
     bumpid2=eng_bumpid[ldi-bump];
