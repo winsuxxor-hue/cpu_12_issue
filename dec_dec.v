@@ -73,7 +73,7 @@ begin
     imm18={cond,flg,rehhs[1],instr[35:23]};
     has_alu=opc[0];
    // flipped=0;
-    if (has_alu && vecinit) imm=imm18*phy;
+    if (has_alu && vecinit) imm=imm18*(phy&{6'b111111,!(opc[2:1]==2 && imm18[2])});
     else if (has_alu && vecmode) imm=imm18*32;
     else imm=imm18;
     postinc=has_alu && ~vecmode;
@@ -90,7 +90,7 @@ begin
     imm17={rehhs[0],instr[35:23]};
     has_alu=opc[4];
    // flipped=0;
-    if (has_alu && vecinit) imm=imm17*phy;
+    if (has_alu && vecinit) imm=imm17*(phy&{6'b111111,!(opc[2:1]==2 && imm18[2])});
     else if (has_alu && vecmode) imm=imm17*32;
     else imm=imm17;
     postinc=has_alu && ~vecmode;
