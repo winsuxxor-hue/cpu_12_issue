@@ -75,7 +75,7 @@ task alu;
           resm=dataA_uns*dataB_uns>>64;
         else 
           resm=passimm[2] ? dataA_sgn/real'(1<<passimm[6:3])
-          : passimm[4] ? passimm[5] ? dataA_ipx[phy[6:0]-passimm[12:6]] :
+          : passimm[4] ? passimm[3] ? dataA_ipx[loopstop] : passimm[5] ? dataA_ipx[phy[6:0]-passimm[12:6]] :
         {pasimm[1] ?
           dataA_real * dataB_real :
           passimm[3] ?
