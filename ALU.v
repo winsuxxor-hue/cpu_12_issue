@@ -94,6 +94,10 @@ task alu;
     res=resl;
   else if (opcode[4:3]==2)
     res=resshf;
+  `ifdef static_logic
+  else if (opcode[4:1]==31 && pasimm[4] & ~passimm[2])
+    res=resm;
+  `endif
   if (~true2) res=dataC;
   resm2<=resm;
   resm3<=resm2;
