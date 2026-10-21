@@ -45,7 +45,7 @@ static task cache;
       eng_xc[phy][fu][eng_lsi]<={1'b1,
                                  expt};
     end
-    if (!hit && eng_en) eng_amiss[fu[3:0]][phy[2]]
+    if (!hit && eng_en) eng_amiss[(fu[3:0]+phy[6:3])%12][phy[2]]
       [eng_addr[4:3]*3+ins[phy][fu]++]
       [phy[1:0]][phy[6:3]]
       <={1'b1,eng_rd,eng_addr,dreq};
