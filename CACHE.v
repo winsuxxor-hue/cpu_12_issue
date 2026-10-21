@@ -48,7 +48,7 @@ static task cache;
     if (!hit && eng_en) eng_amiss[fu[3:0]][phy[2]]
       [eng_addr[4:3]*3+ins[phy][fu]++]
       [phy[1:0]][phy[6:3]]
-      <=1'b1;
+      <={1'b1,eng_rd,eng_addr,dreq};
     for(phi=0;phi<128;phi++) for (s=0;s<2;s++) begin
     if (rdtag_reg[phy][fu].v && 
         rdtag_reg[phy][fu].wr &&
