@@ -49,13 +49,13 @@ static task cache;
         for(b=0;b<12;b++) begin
           bx=tag[phy[1:0]][b]
             [eng_addr[8:6]][eng_addr[11:9]]
-            [eng_addr[12]].pos=0;
+            [eng_addr[12]].pos;
           if (bx==11) tag[phy[1:0]][b]
             [eng_addr[8:6]][eng_addr[11:9]]
-            [eng_addr[12]].pos=0;
+            [eng_addr[12]].pos<=0;
           if (bx<11) tag[phy[1:0]][b]
             [eng_addr[8:6]][eng_addr[11:9]]
-            [eng_addr[12]].pos+=1;
+            [eng_addr[12]].pos+<=1;
         end
       end
     end
@@ -66,7 +66,8 @@ static task cache;
       <={1'b1,eng_rd,eng_addr,dreq,wbank};
       tag[phy[1:0]][wbank][eng_addr[8:6]]
       [eng_addr[11:9]][eng_addr[12]].v
-      <=!rdtag.dirty;
+      &<=!rdtag.dirty;
+      wbank++;
     end
     for(phi=0;phi<128;phi++) for (s=0;s<2;s++) begin
     if (rdtag_reg[phy][fu].v && 
