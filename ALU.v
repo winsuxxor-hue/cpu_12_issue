@@ -9,6 +9,8 @@ task alu;
   input [65:0] dataB_logcmov;
   input [65:0] dataB_shf;
   input real dataB_real;
+  input [65:0] dataC;
+  input [5:0] flgC;
   input true;
   input [4:0] opcode;
   input postinc;
@@ -99,6 +101,10 @@ task alu;
     res=resm;
   `endif
   if (~true2) res=dataC;
+  resflg={bnd(dataA_logcmov,dataB_logcmov,
+              res),res[65:63],|res[63:0],
+          ^res[7:0]};
+  if (~true2) resflg=flgC;
   resm2<=resm;
   resm3<=resm2;
   resmul={1'b0,resm3[63],resm3[63:0]};
