@@ -11,8 +11,8 @@ task wb;
   input en_reg;
   integer c1;
   integer c2;
-  for(c1=0;c1<12;c1++) for(c2=0;c2<12;c2++)
-    for(f=0;f<12;f=f+1)
+  for(c1=0;c1<6;c1++) for(c2=0;c2<6;c2++)
+    for(f=0;f<6;f=f+1)
     begin
       for(a=0;a<3;a++)
         if (eng_free[f][c1][c2][a] && (eng_ra[fu]
