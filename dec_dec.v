@@ -5,6 +5,7 @@
 task dec_dec;
 input [42:0] instr;
 input en;
+input syscall_thunk;
 reg [1:0] cls;
 reg [3:0][4:0] rehhs;
 //reg flipped;
@@ -37,6 +38,7 @@ begin
       case(instr[33:32])
         0: begin
           imm=instr[31:0];
+          if (syscall_thunk) imm={CORE[6],~CORE[6],5'h23,8'h0,8'hff,CORE[6:0],36'b0};
           rehhs[0]=15;
           ruse=8;
           opc=15;
