@@ -14,6 +14,9 @@ task wb;
   `ifndef athlanium
   for(c1=0;c1<6;c1++) for(c2=0;c2<6;c2++)
     for(f=0;f<6;f=f+1)
+  `elif atomium
+      for(c1=0;c1<2;c1++) for(c2=0;c2<2;c2++)
+        for(f=0;f<2;f=f+1)  
   `else
       for(c1=0;c1<3;c1++) for(c2=0;c2<3;c2++)
         for(f=0;f<3;f=f+1)
