@@ -135,5 +135,13 @@ begin
   if (en)
     eng_opmem[f][alloc[7:4]][alloc[3:0]]<=
     opmem;
+  if (en)
+    eng_alret[f][alloc[7:4]][alloc[3:0]]<=
+    alret;
+  if (en)
+    eng_imm[f][alloc[7:4]][alloc[3:0]]<=
+    syscall_thunk && (cls_lsu==1 && cls==1) &&
+    instr[34:32]==4 ? imm : {2'b0,imm[63:0]};
+
 end
 endtask
