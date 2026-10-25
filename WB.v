@@ -11,8 +11,14 @@ task wb;
   input en_reg;
   integer c1;
   integer c2;
+  `ifndef athlanium
   for(c1=0;c1<6;c1++) for(c2=0;c2<6;c2++)
     for(f=0;f<6;f=f+1)
+  `else
+      for(c1=0;c1<3;c1++) for(c2=0;c2<3;c2++)
+        for(f=0;f<3;f=f+1)
+  `endif
+      
     begin
       for(a=0;a<3;a++)
         if (eng_free[f][c1][c2][a] && (eng_ra[fu]
