@@ -1,3 +1,6 @@
 with dram style depleting dynamic logic, gate size approx as xor3/bitmux13 , clock can be 162-164 ghz.
 divide by 2 for sequentially scan through streams if on chip ram
 divide by 15 for sequentially scan if external memory
+new stuff:
+for usa, maxfreq is 102.6, for russia its about 85.5, so the advertised frequency would have to be 85.5.
+which gives 0.5 pflop for 8 core + 1 router/lpddr5/6/io interface.
