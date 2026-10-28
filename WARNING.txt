@@ -1,2 +1,3 @@
-good faith adherence to third party patents is not guaranteed by this code. if you have a contract with a major patent holder this might prevent you from contributing. in such case, mark with comments all of yor code stating whom it belongs to.
-none of this code and documents have been written on a ddr4 or ddr3 or ddr2 or ddr or sdr1-7 or dram or sram nor abacus system
+1. good faith adherence to third party patents is not guaranteed by this code. if you have a contract with a major patent holder this might prevent you from contributing. in such case, mark with comments all of yor code stating whom it belongs to.
+2. none of this code and documents have been written on a ddr4 or ddr3 or ddr2 or ddr or sdr1-7 or dram or sram nor abacus system
+3. From 27-10-2026 onwards no gpl kernel running systems are to be used to edit this repository including android. Explanation: PHYS_MEM_MAP makes the entire gpl kernel system property of the author of the kernel in some countries. I decline the gpl on the combined work of my repository and my android phone 
